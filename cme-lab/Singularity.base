@@ -1,0 +1,56 @@
+Bootstrap: docker
+From: opensuse/leap:15.0
+
+#BootStrap: zypper
+#OSVersion: 15.0
+#MirrorURL: http://download.opensuse.org/distribution/leap/%{OSVERSION}/repo/oss/
+#Include: zypper
+
+%help
+Base image used in CME-Lab workflows.
+This image sets up conda/python
+
+http://coen.boisestate.edu/cmelab/
+
+%setup
+
+%files
+
+%labels
+  Maintainer Mike Henry
+  Maintaine_rEmail mikehenry@boisestate.edu
+  Version v0.01
+
+%environment
+  CONDA_DIR="/opt/conda"
+  PATH="$CONDA_DIR/bin:$PATH"
+  
+  export PATH  
+
+%post
+  # Build envs
+  CONDA_VERSION="4.5.1"
+  CONDA_DIR="/opt/conda"
+  CONDA_MD5_CHECKSUM="0c28787e3126238df24c5d4858bd0744"
+
+  # conda deps
+  zypper ref
+  zypper update -y --no-rec
+  zypper install --no-rec -y wget tar which
+  
+  # install conda
+  mkdir -p "$CONDA_DIR"
+  wget "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh" -O miniconda.sh
+  echo "$CONDA_MD5_CHECKSUM  miniconda.sh" | md5sum -c
+  bash miniconda.sh -f -b -p "$CONDA_DIR"
+  echo "export PATH=$CONDA_DIR/bin:\$PATH" > /etc/profile.d/conda.sh
+  rm miniconda.sh
+
+%runscript
+
+%test
+ CONDA_DIR="/opt/conda"
+ PATH="$CONDA_DIR/bin:$PATH"
+ which conda
+ which python
+ conda list
