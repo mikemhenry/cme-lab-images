@@ -51,7 +51,7 @@ http://coen.boisestate.edu/cmelab/
   echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list
 
   apt-get update && apt-get install -y --no-install-recommends cuda-cudart-$CUDA_PKG_VERSION
-  ln -s cuda-9.2 /usr/local/cuda
+  ln -s cuda-9.1 /usr/local/cuda
   rm -rf /var/lib/apt/lists/*
 
   echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf
@@ -64,7 +64,7 @@ http://coen.boisestate.edu/cmelab/
   apt-get update && apt-get install -y --no-install-recommends \
         cuda-libraries-$CUDA_PKG_VERSION \
         cuda-nvtx-$CUDA_PKG_VERSION \
-        libnccl2=$NCCL_VERSION-1+cuda9.2
+        libnccl2=$NCCL_VERSION-1+cuda9.1
   rm -rf /var/lib/apt/lists/*
 
   # Devel https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile
@@ -74,7 +74,7 @@ http://coen.boisestate.edu/cmelab/
         cuda-nvml-dev-$CUDA_PKG_VERSION \
         cuda-minimal-build-$CUDA_PKG_VERSION \
         cuda-command-line-tools-$CUDA_PKG_VERSION \
-        libnccl-dev=$NCCL_VERSION-1+cuda9.2
+        libnccl-dev=$NCCL_VERSION-1+cuda9.1
   rm -rf /var/lib/apt/lists/*
 
  
