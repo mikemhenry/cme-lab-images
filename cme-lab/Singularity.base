@@ -36,7 +36,7 @@ http://coen.boisestate.edu/cmelab/
   # conda deps
   zypper ref
   zypper update -y --no-rec
-  zypper install --no-rec -y wget tar which
+  zypper install --no-rec -y wget tar
   
   # install conda
   mkdir -p "$CONDA_DIR"
@@ -51,6 +51,6 @@ http://coen.boisestate.edu/cmelab/
 %test
  CONDA_DIR="/opt/conda"
  PATH="$CONDA_DIR/bin:$PATH"
- which conda
- which python
+ command -v conda
+ command -v python
  conda list
