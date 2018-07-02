@@ -1,0 +1,39 @@
+Bootstrap: shub
+From: shub://singularity-hub.org/mikemhenry/cme-lab-images:base
+
+%help
+Base cuda8 image used in CME-Lab workflows.
+
+http://coen.boisestate.edu/cmelab/
+
+%setup
+
+%files
+
+%labels
+  Maintainer Mike Henry
+  Maintaine_rEmail mikehenry@boisestate.edu
+  Version v0.01
+
+%environment
+
+%post
+  wget https://developer.download.nvidia.com/compute/cuda/repos/opensuse132/x86_64/7fa2af80.pub
+  rpm --import 7fa2af80.pub
+
+  wget https://developer.download.nvidia.com/compute/cuda/repos/opensuse132/x86_64/cuda-repo-opensuse132-8.0.61-1.x86_64.rpm
+  rpm -i cuda-repo-opensuse132-8.0.61-1.x86_64.rpm
+  zypper ref
+  zypper in -y --no-rec cuda-nvrtc-8-0 cuda-nvrtc-dev-8-0 \
+                        cuda-nvgraph-8-0 cuda-nvgraph-dev-8-0 \
+                        cuda-cusolver-8-0 cuda-cusolver-dev-8-0 \
+                        cuda-cufft-8-0 cuda-cufft-dev-8-0 \
+                        cuda-cusparse-8-0 cuda-cusparse-dev-8-0 \
+                        cuda-npp-8-0 cuda-npp-dev-8-0 \
+                        cuda-cudart-8-0 cuda-cudart-dev-8-0
+
+%runscript
+
+
+
+%test
