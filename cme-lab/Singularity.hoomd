@@ -1,0 +1,44 @@
+Bootstrap: localimage
+From: cuda80.simg
+
+%help
+Base cuda8 image used in CME-Lab workflows.
+
+http://coen.boisestate.edu/cmelab/
+
+%setup
+
+%files
+
+%labels
+  Maintainer Mike Henry
+  Maintaine_rEmail mikehenry@boisestate.edu
+  Version v0.01
+
+%environment
+
+%post
+
+#### hoomd
+  CONDA_DIR="/opt/conda"
+  PATH="$CONDA_DIR/bin:$PATH"
+  zypper in -y --no-rec git cmake gcc gcc-c++
+  pip install numpy
+  export SOFTWARE_ROOT=/opt/hoomd
+  git clone --recursive https://bitbucket.org/glotzer/hoomd-blue
+  cd hoomd-blue
+  mkdir build
+  cd build
+  export CXX="$(command -v g++)"
+  export CC="$(command -v gcc)"
+  cmake ../ -DCMAKE_INSTALL_PREFIX=${SOFTWARE_ROOT}/lib/python \
+            -DENABLE_CUDA=ON \
+            -DCMAKE_SINGLE_PRECISION=ON
+  make -j1
+  make install
+
+%runscript
+
+
+
+%test

@@ -1,10 +1,5 @@
 Bootstrap: docker
-From: opensuse/leap:15.0
-
-#BootStrap: zypper
-#OSVersion: 15.0
-#MirrorURL: http://download.opensuse.org/distribution/leap/%{OSVERSION}/repo/oss/
-#Include: zypper
+From: ubuntu:16.04
 
 %help
 Base image used in CME-Lab workflows.
@@ -18,7 +13,7 @@ http://coen.boisestate.edu/cmelab/
 
 %labels
   Maintainer Mike Henry
-  Maintaine_rEmail mikehenry@boisestate.edu
+  Maintainer_Email mikehenry@boisestate.edu
   Version v0.01
 
 %environment
@@ -29,14 +24,15 @@ http://coen.boisestate.edu/cmelab/
 
 %post
   # Build envs
-  CONDA_VERSION="4.5.1"
+  CONDA_VERSION="4.5.4"
   CONDA_DIR="/opt/conda"
-  CONDA_MD5_CHECKSUM="0c28787e3126238df24c5d4858bd0744"
+  CONDA_MD5_CHECKSUM="a946ea1d0c4a642ddf0c3a26a18bb16d"
 
   # conda deps
-  zypper ref
-  zypper update -y --no-rec
-  zypper install --no-rec -y wget tar
+  apt update
+  apt install --no-install-recommends -y wget tar ca-certificates bzip2
+  apt clean
+  rm -rf /var/lib/apt/lists/*
   
   # install conda
   mkdir -p "$CONDA_DIR"
