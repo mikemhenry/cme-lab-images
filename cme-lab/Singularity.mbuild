@@ -1,7 +1,5 @@
-#Bootstrap: shub
-#From: shub://singularity-hub.org/mikemhenry/cme-lab-images:cuda80
-Bootstrap: localimage
-From: hoomd.simg 
+Bootstrap: shub
+From: shub://singularity-hub.org/mikemhenry/cme-lab-images:hoomd
 %help
 Base HOOMD image used in CME-Lab workflows.
 
